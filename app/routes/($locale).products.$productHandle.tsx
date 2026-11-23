@@ -232,6 +232,13 @@ export function ProductForm({
 }) {
   const closeRef = useRef<HTMLButtonElement>(null);
 
+  const pendingVariantRef = useRef<string | null>(null);
+
+  // Track variant switches without awaiting prior mutations
+  if (selectedVariant?.id && selectedVariant.id !== pendingVariantRef.current) {
+    pendingVariantRef.current = selectedVariant.id;
+  }
+
   const isOutOfStock = !selectedVariant?.availableForSale;
 
   const isOnSale =

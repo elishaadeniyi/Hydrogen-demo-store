@@ -1,3 +1,4 @@
+import {sentryVitePlugin} from '@sentry/bundler-plugins/vite';
 import {defineConfig} from 'vite';
 import {hydrogen} from '@shopify/hydrogen/vite';
 import {oxygen} from '@shopify/mini-oxygen/vite';
@@ -18,6 +19,10 @@ export default defineConfig({
       },
     }),
     tsconfigPaths(),
+    sentryVitePlugin({
+      org: 'mercor-mq',
+      project: 'javascript-remix',
+    }),
   ],
   ssr: {
     optimizeDeps: {
@@ -39,5 +44,7 @@ export default defineConfig({
     // Allow a strict Content-Security-Policy
     // withtout inlining assets as base64:
     assetsInlineLimit: 0,
+
+    sourcemap: true,
   },
 });

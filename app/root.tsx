@@ -1,3 +1,4 @@
+import {captureRemixErrorBoundaryError, withSentry} from '@sentry/remix';
 import {
   defer,
   type LinksFunction,
@@ -178,13 +179,15 @@ function Layout({children}: {children?: React.ReactNode}) {
   );
 }
 
-export default function App() {
+function App() {
   return (
     <Layout>
       <Outlet />
     </Layout>
   );
 }
+
+export default withSentry(App);
 
 export function ErrorBoundary({error}: {error: Error}) {
   const routeError = useRouteError();
@@ -197,6 +200,8 @@ export function ErrorBoundary({error}: {error: Error}) {
     title = 'Not found';
     if (routeError.status === 404) pageType = routeError.data || pageType;
   }
+
+  captureRemixErrorBoundaryError(error);
 
   return (
     <Layout>
