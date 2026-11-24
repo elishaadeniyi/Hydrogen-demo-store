@@ -37,7 +37,7 @@ export function AddToCartButton({
               width={width}
               variant={variant}
               className={className}
-              disabled={disabled ?? fetcher.state !== 'idle'}
+              disabled={disabled ?? false}
               {...props}
             >
               {children}
